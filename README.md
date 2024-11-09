@@ -36,3 +36,5 @@ the cluster is running on a separate subnet thanks to *tango*, which has two nic
   
 # next up
 - i want to make my vm/container images publicly available
+- proxmox tutorials
+- opensense tutorials
