@@ -1,0 +1,22 @@
+# this configuration requires the nginx-mod-stream module to be installed
+
+stream{
+        upstream k8s {
+                least_conn;
+                server 11.11.11.4:6443 max_fails=3 fail_timeout=5;
+                server 11.11.11.5:6443 max_fails=3 fail_timeout=5;
+        }
+        upstream etcd {
+                least_conn;
+                server 11.11.11.4:4001 max_fails=3 fail_timeout=5;
+                server 11.11.11.5:4001 max_fails=3 fail_timeout=5;
+        }
+        server {
+                listen 4001;
+                proxy_pass etcd;
+        }
+        server {
+                listen 6443;
+                proxy_pass k8s;
+        }
+}
