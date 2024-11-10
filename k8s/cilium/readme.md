@@ -11,5 +11,6 @@ cilium install --version 1.16.3 \
     --set k8sClientRateLimit.burst=42 \
     --set k8sServiceHost=11.11.11.253 \
     --set k8sServicePort=6443 \
-    --set devices='{eth+,ens+,enp+}'
+    --set devices='{eth+,ens+,enp+}' \
+    --set envoy.securityContext.capabilities.keepCapNetBindService=true
 ```

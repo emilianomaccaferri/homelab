@@ -1,0 +1,17 @@
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-macca.casa
+spec:
+  acme:
+    server: https://acme-v02.api.letsencrypt.org/directory
+    email: inbox@emilianomaccaferri.com
+    privateKeySecretRef:
+      name: letsencrypt-macca.casa
+    solvers:
+    - dns01:
+        cloudflare:
+          email: inbox@emilianomaccaferri.com
+          apiTokenSecretRef:
+            name: cloudflare
+            key: token
