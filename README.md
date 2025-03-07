@@ -5,7 +5,7 @@ configurations i use in my homelab
 # background
 
 ![group photo!](assets/homelab-new.jpg)
-my homelab is currently composed of three compute nodes and a managed switch (from right to left):
+my homelab is currently composed of four compute nodes and a managed switch (from right to left):
 
 - tango: router (opnsense), hp compaq elite 8300 SFF
   
