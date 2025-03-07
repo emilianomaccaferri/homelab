@@ -4,7 +4,7 @@ configurations i use in my homelab
 
 # background
 
-![group photo!](assets/homelab.jpg)
+![group photo!](assets/homelab-new.jpg)
 my homelab is currently composed of three compute nodes and a managed switch (from right to left):
 
 - tango: router (opnsense), hp compaq elite 8300 SFF
@@ -16,12 +16,18 @@ my homelab is currently composed of three compute nodes and a managed switch (fr
 - aldo: proxmox node, [lenovo thinkcentre m910q tiny](https://www.refurbed.it/p/lenovo-thinkcentre-m910q-tiny/24397/?offer=612436)
 
   - i5 6500T (4c/8t)
-  - 16GB RAM
+  - 64GB RAM
   - 256GB m.2
 
 - dbero: proxmox node, [lenovo thinkcentre m910q tiny](https://www.refurbed.it/p/lenovo-thinkcentre-m910q-tiny/24397/?offer=612436)
 
   - i5 6500T (4c/8t)
+  - 64GB RAM
+  - 256GB m.2
+  - 500GB SSD
+
+- navighero: proxmox node, [lenovo thinkcentre m920q tiny](https://www.refurbed.it/p/lenovo-thinkcentre-m920q-tiny/)
+  - i5 8500t (6c/12t)
   - 16GB RAM
   - 256GB m.2
 
@@ -42,4 +48,3 @@ the cluster is running on a separate subnet thanks to *tango*, which has two nic
 - i want to make my vm/container images publicly available
 - proxmox tutorials
 - opensense tutorials
-
