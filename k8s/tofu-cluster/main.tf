@@ -8,6 +8,10 @@ terraform {
       source  = "browningluke/opnsense"
       version = "~> 0.11"
     }
+    talos = {
+      source  = "siderolabs/talos"
+      version = "~> 0.8"
+    }
   }
   backend "s3" {
     bucket                      = "terraform-state"
@@ -24,6 +28,7 @@ terraform {
     }
   }
 }
+provider "talos" {}
 provider "cloudflare" {}
 provider "opnsense" {
   uri            = "https://172.10.0.2"
@@ -52,8 +57,8 @@ module "vm" {
   node_name    = var.vms[count.index].node_name
   name         = var.vms[count.index].name
   size         = var.vms[count.index].size
-  controlplane = var.vms[count.index].controlplane
   iso_id       = proxmox_virtual_environment_download_file.latest_talos_linux.id
+  controlplane = var.vms[count.index].controlplane
 }
 data "opnsense_kea_subnet" "k8s_nodes" {
   id = "fcec9b21-b303-4cf4-9e52-4b7ac242378f"
@@ -64,4 +69,12 @@ resource "opnsense_kea_reservation" "dhcp_reservation" {
   ip_address  = module.vm[count.index].ip_address
   mac_address = module.vm[count.index].mac_address
   description = module.vm[count.index].name
+}
+module "talos_config" {
+  source           = "./talos-config"
+  cluster_endpoint = "https://11.11.11.253:6443"
+  cluster_name     = "proxmox-cluster"
+  cluster_nodes = [
+    for vm in module.vm : { controlplane = vm.controlplane, ip = vm.ip_address }
+  ]
 }

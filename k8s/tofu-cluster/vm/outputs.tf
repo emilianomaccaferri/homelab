@@ -7,3 +7,6 @@ output "ip_address" {
 output "name" {
   value = proxmox_virtual_environment_vm.this.name
 }
+output "controlplane" {
+  value = var.controlplane
+}

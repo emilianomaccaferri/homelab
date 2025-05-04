@@ -9,10 +9,6 @@ variable "size" {
   type    = string
   default = "medium"
 }
-variable "controlplane" {
-  type    = bool
-  default = false
-}
 variable "node_name" {
   type = string
 }
@@ -21,4 +17,7 @@ variable "vm_id" {
 }
 variable "iso_id" {
   type = string
+}
+variable "controlplane" {
+  type = bool
 }
