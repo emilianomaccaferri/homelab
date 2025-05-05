@@ -10,3 +10,6 @@ variable "cluster_nodes" {
     controlplane = bool
   }))
 }
+variable "first_cluster_node" {
+  type = string
+}

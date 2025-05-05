@@ -51,7 +51,7 @@ resource "proxmox_virtual_environment_download_file" "latest_talos_linux" {
   url          = "https://factory.talos.dev/image/ce4c980550dd2ab1b17bbf2b08801c7eb59418eafe8f279833297925d67c7515/v1.10.0/metal-amd64.iso"
 }
 module "vm" {
-  source       = "./vm"
+  source       = "../vm"
   count        = length(var.vms)
   vm_id        = var.vms[count.index].vm_id
   node_name    = var.vms[count.index].node_name
@@ -69,12 +69,4 @@ resource "opnsense_kea_reservation" "dhcp_reservation" {
   ip_address  = module.vm[count.index].ip_address
   mac_address = module.vm[count.index].mac_address
   description = module.vm[count.index].name
-}
-module "talos_config" {
-  source           = "./talos-config"
-  cluster_endpoint = "https://11.11.11.253:6443"
-  cluster_name     = "proxmox-cluster"
-  cluster_nodes = [
-    for vm in module.vm : { controlplane = vm.controlplane, ip = vm.ip_address }
-  ]
 }

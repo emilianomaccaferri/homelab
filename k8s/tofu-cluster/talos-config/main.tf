@@ -34,7 +34,8 @@ resource "talos_machine_configuration_apply" "this" {
     yamlencode({
       machine = {
         install = {
-          disk = "/dev/vda"
+          disk  = "/dev/vda"
+          image = "factory.talos.dev/installer/ce4c980550dd2ab1b17bbf2b08801c7eb59418eafe8f279833297925d67c7515:v1.10.0" # required otherwise proxmox wouldn't be able to turn off deployed vms
         }
       }
       cluster = {
@@ -53,8 +54,23 @@ resource "talos_machine_configuration_apply" "this" {
 resource "talos_machine_bootstrap" "this" {
   count = length(var.cluster_nodes)
   depends_on = [
-    talos_machine_configuration_apply.this # waits for all nodes to be ready before starting applying 
+    talos_machine_configuration_apply.this
   ]
   node                 = var.cluster_nodes[count.index].ip
   client_configuration = talos_machine_secrets.this.client_configuration
+  lifecycle {
+    replace_triggered_by = [talos_machine_configuration_apply.this]
+  }
+
+}
+resource "talos_cluster_kubeconfig" "this" {
+  depends_on = [
+    talos_machine_bootstrap.this
+  ]
+  node                 = var.first_cluster_node
+  client_configuration = talos_machine_secrets.this.client_configuration
+  lifecycle {
+    replace_triggered_by = [talos_machine_configuration_apply.this]
+  }
+
 }
